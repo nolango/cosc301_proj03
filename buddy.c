@@ -204,9 +204,9 @@ void dump_memory_map(void) {
 	return;
 }
 
-//					//
+//		    //
 // HELPER FUNCTIONS //
-//					//
+//		    //
 
 void get_header(void *block, int *size, int *offset) {
     int *iblock = (int*)block;
@@ -319,8 +319,8 @@ void* find_free_space(int upped_size){
 
 void mupdate(void* free_space, int free_space_size){
 	int size, offset;
-	get_header(free_space, &size, &offset);				// size is reduced size from split and
-														// offset is still offset from free_space
+	get_header(free_space, &size, &offset);
+						
 	// if free list pointer will change
 	// from the result of the malloc
 	if(free_list == free_space){
@@ -344,8 +344,8 @@ void mupdate(void* free_space, int free_space_size){
 			modify_header(free_list, fsize, offset);
 			return;
 		}
-	} else { // free_list != free_space								// have to be extra careful with this condition because
-		void *free_listp = free_list;								// it will be difficult to check if it's ok -- STILL NOT TESTED
+	} else { // free_list != free_space
+		void *free_listp = free_list;
 		int list_size, list_offset;
 		// nextp points to next free block from curent list_p
 		void *nextp;
@@ -381,25 +381,7 @@ void mupdate(void* free_space, int free_space_size){
 			int free_offset = offset - free_space_size;			
 			modify_header(nextp, free_size, free_offset);
 			return;	
-
-/*										  new offset
-									|---------------------\
-		_____________________________________________________________
-		||||||||||||| free	|||||||||  new	| free	||||||| free	 |
-		|||||||||||||		||||||||| alloc	|		|||||||			 |
-		-------------------------------------------------------------
-									    	\-------------|
-											  free offset
-*/
 		}
 			
 	} // end else
-	
-	
-	
-	
-
 }
-
-
-// note: what happens if you call mfree(1) twice?
